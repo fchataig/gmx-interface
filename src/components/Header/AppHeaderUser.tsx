@@ -1,4 +1,3 @@
-import connectWalletImg from "img/ic_wallet_24.svg";
 import AddressDropdown from "../AddressDropdown/AddressDropdown";
 import ConnectWalletButton from "../Common/ConnectWalletButton";
 
@@ -77,7 +76,7 @@ export function AppHeaderUser({ openSettings, small, disconnectAccountAndCloseSe
 
         {showConnectionOptions && openConnectModal ? (
           <>
-            <ConnectWalletButton onClick={openConnectModal} imgSrc={connectWalletImg}>
+            <ConnectWalletButton onClick={openConnectModal}>
               {small ? <Trans>Connect</Trans> : <Trans>Connect Wallet</Trans>}
             </ConnectWalletButton>
             {!small && <NotifyButton />}

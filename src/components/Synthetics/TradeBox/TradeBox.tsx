@@ -1,8 +1,7 @@
 import { Trans, msg, t } from "@lingui/macro";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import cx from "classnames";
-import { ChangeEvent, KeyboardEvent, ReactNode, useCallback, useEffect, useMemo, useRef } from "react";
-import { IoMdSwap } from "react-icons/io";
+import { ChangeEvent, KeyboardEvent, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useKey, useLatest, usePrevious } from "react-use";
 
@@ -148,6 +147,7 @@ import SwapIcon from "img/swap.svg?react";
 import { MissedCoinsPlace } from "domain/synthetics/userFeedback";
 import { MissedCoinsHint } from "../MissedCoinsHint/MissedCoinsHint";
 import "./TradeBox.scss";
+import { IcoAnimExchange } from "img/IcoAnimExchange";
 
 export type Props = {
   setPendingTxns: (txns: any) => void;
@@ -966,7 +966,9 @@ export function TradeBox(p: Props) {
     [leverageOption, leverageSliderMarks, setLeverageOption]
   );
 
-  function renderTokenInputs() {
+  function RenderTokenInputs() {
+    const [isHovered, setIsHovered] = useState<boolean>(false);
+
     return (
       <>
         <BuyInputSection
@@ -1013,8 +1015,16 @@ export function TradeBox(p: Props) {
             className="Exchange-swap-ball bg-blue-500"
             onClick={onSwitchTokens}
             data-qa="swap-ball"
+            onMouseEnter={() => {
+              setIsHovered(true);
+            }}
+            onMouseLeave={() => {
+              setIsHovered(false);
+            }}
           >
-            <IoMdSwap className="Exchange-swap-ball-icon" />
+            <div className="Exchange-swap-ball-icon">
+              <IcoAnimExchange isHovered={isHovered} />
+            </div>
           </button>
         </div>
 
@@ -1379,7 +1389,7 @@ export function TradeBox(p: Props) {
             qa="trade-mode"
           />
           <form onSubmit={handleFormSubmit} ref={formRef}>
-            {(isSwap || isIncrease) && renderTokenInputs()}
+            {(isSwap || isIncrease) && RenderTokenInputs()}
             {isTrigger && renderDecreaseSizeInput()}
 
             {isSwap && isLimit && renderTriggerRatioInput()}

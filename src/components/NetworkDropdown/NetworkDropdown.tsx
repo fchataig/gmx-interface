@@ -4,7 +4,6 @@ import { useLingui } from "@lingui/react";
 import cx from "classnames";
 import noop from "lodash/noop";
 import { useCallback, useState } from "react";
-import { HiDotsVertical } from "react-icons/hi";
 
 import { getIcon } from "config/icons";
 import { useChainId } from "lib/chains";
@@ -17,6 +16,7 @@ import LanguageModalContent from "./LanguageModalContent";
 
 import language24Icon from "img/ic_language24.svg";
 import settingsIcon from "img/ic_settings_16.svg";
+import { IcoAnimDotsVertical } from "img/IcoAnimDotsVertical";
 
 import "./NetworkDropdown.css";
 
@@ -95,6 +95,7 @@ export default function NetworkDropdown(props) {
 function NavIcons({ selectorLabel }) {
   const { chainId } = useChainId();
   const icon = getIcon(chainId, "network");
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   return (
     <>
@@ -102,8 +103,16 @@ function NavIcons({ selectorLabel }) {
         <img className="network-dropdown-icon" src={icon} alt={selectorLabel} />
       </button>
       <div className="network-dropdown-seperator" />
-      <button className="transparent">
-        <HiDotsVertical color="white" size={20} />
+      <button
+        className="transparent !pointer-events-auto"
+        onMouseEnter={() => {
+          setIsHovered(true);
+        }}
+        onMouseLeave={() => {
+          setIsHovered(false);
+        }}
+      >
+        <IcoAnimDotsVertical isHovered={isHovered} />
       </button>
     </>
   );
